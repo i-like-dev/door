@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理介面</title>
+<style>
+  .keypad-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  .keypad {
+    display: none; /* 初始時不顯示 */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .keypad.show {
+    display: grid; /* 顯示時的樣式 */
+  }
+
+  .input-box {
+    margin-right: 20px;
+  }
+
+  .keypad button {
+    padding: 10px;
+    font-size: 20px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .keypad button:active {
+    background-color: #efefef;
+  }
+
+  .toggle-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="keypad-container">
+  <div>
+    <input class="input-box" type="text" id="keypadInput" placeholder="感應管理員卡號...">
+    <button class="toggle-button" onclick="toggleKeypad()">顯示小鍵盤</button>
+  </div>
+
+  <div class="keypad" id="keypad">
+    <!-- Keypad buttons -->
+    <button onclick="pressKey('1')">1</button>
+    <button onclick="pressKey('2')">2</button>
+    <button
+onclick="pressKey('3')">3</button>
+    <button
+onclick="pressKey('4')">4</button>
+    <button
+onclick="pressKey('5')">5</button>
+    <button
+onclick="pressKey('6')">6</button>
+    <button
+onclick="pressKey('7')">7</button>
+    <button
+onclick="pressKey('8')">8</button>
+    <button
+onclick="pressKey('9')">9</button>
+    
+    <!-- ...其他按鈕... -->
+    <button onclick="pressKey('0')">0</button>
+    <button onclick="deleteKey()">刪除  </button>
+    <button onclick="submitKey()">送出</button>
+  </div>
+</div>
+
+<script>
+  // 切換鍵盤顯示
+  function toggleKeypad() {
+    var keypad = document.getElementById('keypad');
+    var toggleButton = document.querySelector('.toggle');
+    if (keypad.style.display === "none" || keypad.style.display === '') {
+      keypad.style.display = "grid";
+      toggleButton.textContent = "隱藏鍵盤";
+    } else {
+      keypad.style.display = "none";
+      toggleButton.textContent = "顯示鍵盤";
+    }
+  }
+
+  // 處理數字鍵和功能鍵的輸入
+  function pressKey(key) {
+    var input = document.getElementById('keypadInput');
+    input.value += key;
+  }
+
+  function deleteKey() {
+    var input = document.getElementById('keypadInput');
+    input.value = input.value.slice(0, -1);
+  }
+
+  function submitKey() {
+    var input = document.getElementById('keypadInput');
+    // 在這裡添加檢查代碼的邏輯
+    alert("輸入的代碼是: " + input.value);
+    // 比如，如果輸入正確，導航到 index.html
+    if (input.value === '0001692131') {
+      alert('登入成功！')
+      alert('帳號為：0001692131、密碼為：**********')
+      window.location.href = 'open.html';
+    } else {
+      alert('卡號錯誤!');
+    }
+  }
+
+  // 設置鍵盤事件，當按下 Enter 鍵時執行 submitKey 函數
+  document.getElementById('keypadInput').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      submitKey();
+    }
+  });
+</script>
+
+</body>
+</html>
